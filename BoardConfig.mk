@@ -44,8 +44,9 @@ TARGET_NO_BOOTLOADER := true
 TARGET_SCREEN_DENSITY := 560
 
 # Kernel
-BOARD_BOOT_HEADER_VERSION := 1
 BOARD_KERNEL_BASE := 0x00000000
+BOARD_KERNEL_PAGESIZE := 4096
+
 BOARD_KERNEL_CMDLINE := \
     androidboot.configfs=true \
     androidboot.console=ttyMSM0 \
@@ -61,10 +62,14 @@ BOARD_KERNEL_CMDLINE := \
     service_locator.enable=1 \
     swiotlb=2048 \
     video=vfb:640x400,bpp=32,memsize=3072000
-BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
-BOARD_KERNEL_PAGESIZE := 4096
+
+BOARD_BOOT_HEADER_VERSION := 2
+BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+BOARD_KERNEL_IMAGE_NAME := Image.gz
 BOARD_KERNEL_SEPARATED_DTBO := true
+
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
+
 TARGET_KERNEL_CONFIG := aura_defconfig
 TARGET_KERNEL_SOURCE := kernel/razer/sdm845
 
