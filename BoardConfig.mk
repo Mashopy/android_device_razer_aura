@@ -49,12 +49,9 @@ BOARD_KERNEL_PAGESIZE := 4096
 
 BOARD_KERNEL_CMDLINE := \
     androidboot.configfs=true \
-    androidboot.console=ttyMSM0 \
     androidboot.hardware=qcom \
     androidboot.usbcontroller=a600000.dwc3 \
     androidboot.vbmeta.avb_version=1.0 \
-    console=ttyMSM0,115200n8 \
-    earlycon=msm_geni_serial,0xA84000 \
     ehci-hcd.park=3 \
     loop.max_part=7 \
     lpm_levels.sleep_disabled=1 \
