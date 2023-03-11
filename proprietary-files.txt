@@ -283,6 +283,22 @@ vendor/lib64/vendor.display.color@1.4.so|1396673668977af0a8afeaa64f891c3b356f958
 vendor/lib64/vendor.display.color@1.5.so|f1c12eb133698917385d48913358eaffd9a10879
 vendor/lib64/vendor.display.postproc@1.0.so|e56b66d744dd77bd87afbb30cab558acf15709fb
 
+# Dolby
+system/app/DaxUI/DaxUI.apk:product/app/DaxUI/DaxUI.apk
+system/etc/permissions/com.dolby.daxservice.xml:product/etc/permissions/com.dolby.daxservice.xml
+system/priv-app/daxService/daxService.apk:product/priv-app/daxService/daxService.apk
+vendor/bin/hw/vendor.dolby.hardware.dms@1.0-service
+vendor/etc/dolby/dax-default.xml
+vendor/etc/init/vendor.dolby.hardware.dms@1.0-service.rc
+vendor/lib/libdapparamstorage.so
+vendor/lib/soundfx/libswdap.so
+vendor/lib/vendor.dolby.hardware.dms@1.0.so
+vendor/lib64/libdlbdsservice.so
+vendor/lib64/libdapparamstorage.so
+vendor/lib64/soundfx/libswdap.so
+vendor/lib64/vendor.dolby.hardware.dms@1.0-impl.so
+vendor/lib64/vendor.dolby.hardware.dms@1.0.so
+
 # DPM - from polaris V11.0.5.0.QDGMIXM
 product/bin/dpmd:system_ext/bin/dpmd|7503d40ddb06e41333aafe4613d0dba6aed9b896
 product/etc/dpm/dpm.conf:system_ext/etc/dpm/dpm.conf|95e27da8c989e96c6faea6f0697bce11955b62a5
