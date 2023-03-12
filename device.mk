@@ -125,27 +125,6 @@ PRODUCT_COPY_FILES += \
     system/core/libprocessgroup/profiles/cgroups_28.json:$(TARGET_COPY_OUT_VENDOR)/etc/cgroups.json \
     system/core/libprocessgroup/profiles/task_profiles_28.json:$(TARGET_COPY_OUT_VENDOR)/etc/task_profiles.json
 
-# Device fstab
-PRODUCT_PACKAGES += \
-    fstab.qcom
-
-# Device init scripts
-PRODUCT_PACKAGES += \
-    init.aura.led_init.sh \
-    init.qcom.early_boot.sh \
-    init.qcom.post_boot.sh \
-    init.qcom.rc \
-    init.qcom.power.rc \
-    init.qcom.sensors.sh \
-    init.qcom.sh \
-    init.qcom.usb.rc \
-    init.qcom.usb.sh \
-    init.qti.qseecomd.sh \
-    init.recovery.qcom.rc \
-    init.sensor.e2pwrite.sh \
-    init.target.rc \
-    ueventd.qcom.rc
-
 # Device-specific settings
 PRODUCT_PACKAGES += \
     AuraParts
