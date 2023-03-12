@@ -197,6 +197,7 @@ PRODUCT_PACKAGES += \
 # Init
 PRODUCT_PACKAGES += \
     fstab.qcom \
+    fstab.qcom.ramdisk \
     init.aura.led_init.sh \
     init.class_main.sh \
     init.qcom.early_boot.sh \
