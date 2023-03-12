@@ -197,6 +197,7 @@ PRODUCT_PACKAGES += \
 # Init
 PRODUCT_PACKAGES += \
     fstab.qcom \
+    init.aura.led_init.sh \
     init.class_main.sh \
     init.qcom.early_boot.sh \
     init.qcom.post_boot.sh \
@@ -204,7 +205,9 @@ PRODUCT_PACKAGES += \
     init.qcom.sh \
     init.qcom.usb.rc \
     init.qcom.usb.sh \
+    init.rc2.rc \
     init.recovery.qcom.rc \
+    init.sensor.e2pwrite.sh \
     init.target.rc \
     ueventd.qcom.rc
 

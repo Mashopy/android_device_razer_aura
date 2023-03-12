@@ -1,0 +1,126 @@
+on early-boot
+    # Persist
+    chown system system /mnt/vendor/persist/sensors
+    chown system system /mnt/vendor/persist/sensors/sns.reg
+    chown system system /mnt/vendor/persist/sensors/sensors_list.txt
+    chown system system /mnt/vendor/persist/sensors/registry
+    chown system system /mnt/vendor/persist/sensors/registry/registry
+    chown system system /mnt/vendor/persist/sensors/registry/registry/sensors_registry
+    chown system system /mnt/vendor/persist/sensors/sensors_settings
+    chown system system /mnt/vendor/persist/sensors/registry/sns_reg_config
+    chown system system /mnt/vendor/persist/sensors/registry/sns_reg_version
+    chown system system /mnt/vendor/persist/sensors/registry/config
+    chmod 0664 /mnt/vendor/persist/sensors/sensors_settings
+
+    # SSR Setup
+    write /sys/bus/msm_subsys/devices/subsys0/restart_level RELATED
+    write /sys/bus/msm_subsys/devices/subsys1/restart_level RELATED
+    write /sys/bus/msm_subsys/devices/subsys2/restart_level RELATED
+    write /sys/bus/msm_subsys/devices/subsys3/restart_level RELATED
+    write /sys/bus/msm_subsys/devices/subsys4/restart_level RELATED
+    write /sys/bus/msm_subsys/devices/subsys5/restart_level RELATED
+    write /sys/bus/msm_subsys/devices/subsys6/restart_level RELATED
+    write /sys/bus/msm_subsys/devices/subsys7/restart_level RELATED
+
+on boot
+    # Persist
+    mkdir /mnt/vendor/persist/alarm 0777 system system
+    mkdir /mnt/vendor/persist/bluetooth 0770 bluetooth bluetooth
+    chmod 0666 /mnt/vendor/persist/alarm/data
+
+    # Touchscreen
+    chown system system /sys/devices/platform/soc/a98000.i2c/i2c-7/7-0020/input/input1/wake_gesture
+    chmod 0660 /sys/devices/platform/soc/a98000.i2c/i2c-7/7-0020/input/input1/wake_gesture
+
+# USB
+on property:sys.usb.config=rndis,none && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/idVendor 0x1532
+    write /config/usb_gadget/g1/idProduct 0x905e
+
+on property:sys.usb.ffs.ready=1 && property:sys.usb.config=rndis,none,adb && pro
+    write /config/usb_gadget/g1/idVendor 0x1532
+    write /config/usb_gadget/g1/idProduct 0x905f
+
+on property:sys.usb.config=adb && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/idVendor 0x1532
+    write /config/usb_gadget/g1/idProduct 0x9051
+
+on property:sys.usb.config=mtp && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/idVendor 0x1532
+    write /config/usb_gadget/g1/idProduct 0x9052
+
+on property:sys.usb.config=mtp,adb && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/idVendor 0x1532
+    write /config/usb_gadget/g1/idProduct 0x9053
+
+on property:sys.usb.config=ptp && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/idVendor 0x1532
+    write /config/usb_gadget/g1/idProduct 0x9054
+
+on property:sys.usb.config=ptp,adb && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/idVendor 0x1532
+    write /config/usb_gadget/g1/idProduct 0x9055
+
+on property:sys.usb.config=audio_source && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/idVendor 0x1532
+    write /config/usb_gadget/g1/idProduct 0x9058
+
+on property:sys.usb.config=audio_source,adb && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/idVendor 0x1532
+    write /config/usb_gadget/g1/idProduct 0x9059
+
+on property:sys.usb.config=accessory,audio_source && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/idVendor 0x1532
+    write /config/usb_gadget/g1/idProduct 0x905a
+
+on property:sys.usb.config=accessory,audio_source,adb && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/idVendor 0x1532
+    write /config/usb_gadget/g1/idProduct 0x905b
+
+on property:sys.usb.config=midi && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/idVendor 0x1532
+    write /config/usb_gadget/g1/idProduct 0x905c
+
+on property:sys.usb.config=midi,adb && property:sys.usb.configfs=1
+    write /config/usb_gadget/g1/idVendor 0x1532
+    write /config/usb_gadget/g1/idProduct 0x905d
+
+on post-fs-data
+    # Radio (FIH)
+    mkdir /data/misc/fih_mcfg 0775 radio root
+    mkdir /data/misc/fih_atl 2770 radio root
+
+on property:gsm.sim.operator.numeric=50502
+    setprop ro.com.google.clientidbase.am android-optus-au-revc
+    setprop ro.com.google.clientidbase.ms android-optus-au-revc
+
+on property:gsm.sim.operator.numeric=50590
+    setprop ro.com.google.clientidbase.am android-optus-au-revc
+    setprop ro.com.google.clientidbase.ms android-optus-au-revc
+
+on property:ro.vendor.ril.fih_mbn_copy_completed=1
+    write /data/vendor/radio/atl_complete 0
+    write /data/misc/fih_mcfg/rfs_complete 0
+    write /data/misc/fih_mcfg/atl_log.txt ""
+
+on property:ro.vendor.ril.fih_mcfg_lock=1
+    write /data/misc/fih_mcfg/fih_mcfg.lock ""
+
+# Sensor
+service e2p-sh /vendor/bin/init.sensor.e2pwrite.sh
+    class late_start
+    user system
+    group system
+    oneshot
+
+service led-init /vendor/bin/sh /vendor/bin/init.aura.led_init.sh
+    class main
+    user root
+    oneshot
+
+# Wifi
+service wireless-init /vendor/bin/wireless_init -i
+    class main
+    user system
+    group system
+    oneshot

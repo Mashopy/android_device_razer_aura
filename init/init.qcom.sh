@@ -450,6 +450,30 @@ fi
 chmod g-w /data/vendor/modem_config
 setprop ro.vendor.ril.mbn_copy_completed 1
 
+if [ -f /data/misc/fih_mcfg/ver_info.txt ]; then
+    pre_fihver=`cat /data/misc/fih_mcfg/ver_info.txt`
+else
+    pre_fihver=""
+fi
+
+cur_fihver=`cat /firmware/verinfo/ver_info.txt`
+if [ ! -f /firmware/verinfo/ver_info.txt -o "$pre_fihver" != "$cur_fihver" ]; then
+    # add W for group recursively before delete
+    chmod g+w -R /data/misc/fih_atl/modem_config/*
+    rm -rf /data/misc/fih_atl/modem_config/*
+    # preserve the read only mode for all subdir and files
+    cp --preserve=m -dr /firmware/image/modem_pr/mcfg/configs/* /data/misc/fih_atl/modem_config
+    cp --preserve=m -d /firmware/verinfo/ver_info.txt /data/misc/fih_mcfg/
+    # the group must be root, otherwise this script could not add "W" for group recursively
+    chown -hR radio.root /data/misc/fih_atl/modem_config/*
+fi
+chmod g-w /data/misc/fih_atl/modem_config
+setprop ro.vendor.ril.fih_mbn_copy_completed 1
+
+if [ "$pre_fihver" != "$cur_fihver" ]; then
+    setprop ro.vendor.ril.fih_mcfg_lock 1
+fi
+
 #check build variant for printk logging
 #current default minimum boot-time-default
 buildvariant=`getprop ro.build.type`
